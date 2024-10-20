@@ -1,0 +1,31 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::table('quizzes', function (Blueprint $table) {
+        $table->unsignedBigInteger('childcategory_id')->nullable();
+
+        $table->foreign('childcategory_id')->references('id')->on('childcategories')->onDelete('cascade');
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::table('quizzes', function (Blueprint $table) {
+            $table->dropForeign(['childcategory_id']);
+        $table->dropColumn('childcategory_id');
+        });
+    }
+};
